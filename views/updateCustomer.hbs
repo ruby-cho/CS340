@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Customer Information</title>
+    <style>
+        h1{
+            text-align: center;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #285381;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .form-section {
+            display: none;
+            margin-top: 20px;
+        }
+        .return-button {
+            position: absolute; 
+            top: 10px; 
+            left: 10px; 
+            padding: 10px 20px; 
+            border: 2px solid #fc2424; 
+            background-color: rgb(241, 79, 79); 
+            color: #fcfdff; 
+            text-decoration: none; 
+            font-size: 16px; 
+            border-radius: 5px; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2); 
+        }
+        .return-button:hover {
+            background-color: #ff0000; 
+            color: rgb(255, 255, 255); 
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="return-button">Return to Home</a>
+    <h1>Update Customer Information</h1>
+    <h2><u>Click</u> on the customer to Edit/Delete.</h2>
+    <table id="customers">
+        <thead>
+            <tr>
+                <th>Customer ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data}}
+            <tr>
+                <td>{{this.customer_ID}}</td>
+                <td>{{this.first_name}}</td>
+                <td>{{this.last_name}}</td>
+                <td>{{this.email}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+    <div id="form-section" class="form-section">
+        <h2>Edit Customer Details</h2>
+        <label for="firstname">First Name:</label>
+        <input type="text" id="firstname" name="firstname" value="">
+
+        <label for="lastname">Last Name:</label>
+        <input type="text" id="lastname" name="lastname" value="">
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="">
+
+        <label for="status">Active Status:</label>
+        <input type="text" id="status" name="status" value="">
+
+        <button type="submit">Update Customer</button>
+        <button type="submit">Delete Customer</button>
+    </div>
+
+    <script>
+        function selectCustomer(row) {
+            var formSection = document.getElementById('form-section');
+            formSection.style.display = 'block'; 
+
+            document.getElementById('firstname').value = row.cells[1].innerText;
+            document.getElementById('lastname').value = row.cells[2].innerText;
+            document.getElementById('email').value = row.cells[3].innerText;
+            document.getElementById('status').value = row.cells[5].innerText;
+        }
+    </script>
+</body>
+</html>

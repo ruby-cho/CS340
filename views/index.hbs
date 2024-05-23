@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Game Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;  
+            min-height: 100vh;
+            padding-top: 20px; 
+            margin-left: 20px;
+        }
+        h1 {
+            margin-bottom: 20px; 
+            font-size: 56px;
+            text-align: center; 
+            width: 100%;
+        }
+        h2{
+            text-align: left;
+        }
+        .buttons-container {
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            gap: 10px;
+        }
+        .button {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            background-color: #376aa1;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 10px 0;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #0c253f;
+        }
+        .button-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .button-subtitle {
+            font-size: 16px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <h1>GameStream Admin Portal</h1>
+    <h2>Customers</h2>
+    <div class="buttons-container">
+        <a href="/addCustomer" class="button">
+            <div class="button-title">Add new customer</div>
+        </a>
+        <a href="/updateCustomer" class="button">
+            <div class="button-title">Update Customer Info</div>
+        </a>
+    </div>
+    <h2>Games & Studios</h2>
+    <div class="buttons-container">
+        <a href="viewGames.html" class="button">
+            <div class="button-title">View Our Games</div>
+        </a>
+        <a href="addGame.html" class="button">
+            <div class="button-title">Add a New Game</div>
+        </a>
+        <a href="genres.html" class="button">
+            <div class="button-title">Game Genres</div>
+        </a>
+        <a href="developers.html" class="button">
+            <div class="button-title">Manage Studios</div>
+        </a>
+    </div>
+    <h2>Data</h2>
+    <div class="buttons-container">
+        <a href="subscriptions.html" class="button">
+            <div class="button-title">Subscriptions</div>
+        </a>
+        <a href="streams.html" class="button">
+            <div class="button-title">Streaming</div>
+        </a>
+        <!--
+        <a href="payments.html" class="button">
+            <div class="button-title">Payments</div>
+        </a>
+        -->
+    </div>
+</body>
+</html>
+

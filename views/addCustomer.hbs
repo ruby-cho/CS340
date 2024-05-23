@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Customer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        h1{
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        .return-button {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            padding: 10px 20px;
+            border: 2px solid #fc2424;
+            background-color: rgb(241, 79, 79);
+            color: #fcfdff;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .return-button:hover {
+            background-color: #ff0000;
+            color: white;
+        }
+        .submit-button{
+            background-color:rgb(48, 224, 92);
+            color: white;
+        }
+        .submit-button:hover{
+            background-color: #125f23;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="return-button">Return to Home</a>
+    <h1>Add New Customer</h1>
+    <form id="addCustomerForm">
+        <h2>Customer Details</h2>
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required><br><br>
+
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <h2>Subscription Details</h2>
+        <label for="startDate">Subscription Start Date:</label>
+        <input type="date" id="startDate" name="startDate" required><br><br>
+
+        <label for="endDate">Subscription End Date:</label>
+        <input type="date" id="endDate" name="endDate" required><br><br>
+
+        <label for="activeStatus">Active Status:</label>
+        <select id="activeStatus" name="activeStatus">
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+        </select><br><br>
+
+        <!--
+        <h2>Payment Details</h2>
+        <label for="ccCompany">Credit Card Company:</label>
+        <input type="text" id="ccCompany" name="ccCompany" required><br><br>
+
+        <label for="ccNumber">Credit Card Number:</label>
+        <input type="number" id="ccNumber" name="ccNumber" required><br><br>
+
+        <label for="paymentDate">Payment Date:</label>
+        <input type="date" id="paymentDate" name="paymentDate" required><br><br>
+
+        <label for="paymentAmount">Payment Amount:</label>
+        <input type="number" id="paymentAmount" name="paymentAmount" step="0.01" required><br><br>
+        <button type="button" class="submit-button" onclick="alert('Submit functionality not implemented yet.');">Submit</button>
+        -->
+    </form>
+
+    <script>
+        document.getElementById('addCustomerForm').onsubmit = function() {
+            return true;
+        };
+    </script>
+</body>
+</html>
