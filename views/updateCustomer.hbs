@@ -53,7 +53,7 @@
     </style>
 </head>
 <body>
-    <a href="index.html" class="return-button">Return to Home</a>
+    <a href="/" class="return-button">Return to Home</a>
     <h1>Update Customer Information</h1>
     <h2><u>Click</u> on the customer to Edit/Delete.</h2>
     <table id="customers">
@@ -76,6 +76,22 @@
             {{/each}}
         </tbody>
     </table>
+
+    <!-- /views/index.hbs -->
+<h2>Add Customer</h2>
+<p>To add a new customer, please enter their information below and click `Submit`!</p>
+<form id="add-customer-form" method="POST" action="/add-customer-form">
+    <label for="input-fname">First Name: </label>
+    <input type="text" name="input-fname" id="input-fname">
+    
+    <label for="input-lname">Last Name: </label>
+    <input type="text" name="input-lname" id="input-lname">
+
+    <label for="input-email">Email: </label>
+    <input type="text" name="input-email" id="input-email">
+
+    <input type="submit">
+    </form>
 
     <div id="form-section" class="form-section">
         <h2>Edit Customer Details</h2>

@@ -6,6 +6,10 @@
 // Express
 var express = require('express');   // We are using the express library for the web server
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
+app.use(express.static('public'))
+
 PORT        = 2566;                 // Set a port number at the top so it's easy to change in the future
 
 // Database
@@ -37,6 +41,33 @@ app.get('/updateCustomer', (req,res) => {
 app.get('/addCustomer', (req, res) => {
     res.render('addCustomer');
 });
+
+// app.js
+
+app.post('/add-customer-form', function(req, res){
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Customers (first_name, last_name, email) VALUES ('${data['input-fname']}', '${data['input-lname']}', '${data['input-email']}')`;
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+
+        // If there was no error, we redirect back to our root route, which automatically runs the SELECT * FROM bsg_people and
+        // presents it on the screen
+        else
+        {
+            res.redirect('/updateCustomer');
+        }
+    })
+})
 
 /*
     LISTENER
