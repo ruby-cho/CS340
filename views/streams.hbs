@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Streams</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <a href="/" class="return-button">Return to Home</a>
+    <h1>Stream Management</h1>
+    <h2><u>Click</u> on the Stream to Edit/Delete.</h2>
+    <table id="streams-table">
+        <thead>
+            <tr>
+                <th>Stream ID</th>
+                <th>Customer ID</th>
+                <th>Game ID</th>
+                <th>Stream Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data}}
+            <tr onclick="selectStream(this)">
+                <td>{{this.stream_ID}}</td>
+                <td>{{this.customer_ID}}</td>
+                <td>{{this.game_ID}}</td>
+                <td>{{this.stream_date}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+    <!-- /views/index.hbs -->
+    <h2>Add Stream</h2>
+    <p>To add a new Stream, please enter their information below and click `Submit`!</p>
+    <form id="add-stream-form" method="POST" action="/add-stream-form">
+        <label for="input-customerID">Customer Name: </label>
+        <select name="input-customerID" id="input-customerID">
+            <option value="">Choose Customer</option>
+            {{#each customers}}
+            <option value="{{this.customer_ID}}">{{this.first_and_last_name}}</option>
+            {{/each}}
+        </select>
+        <label for="input-gameID">Game Title: </label>
+        <select name="input-gameID" id="input-gameID">
+            <option value="">Choose Game</option>
+            {{#each games}}
+            <option value="{{this.game_ID}}">{{this.Title}}</option>
+            {{/each}}
+        </select>
+        <label for="input-streamDate">Stream Date: </label>
+        <input type="date" id="input-streamDate" name="input-streamDate">
+
+        <input type="submit">
+    </form>
+
+    <div id="form-section" class="form-section">
+    <h2>Edit Stream Details</h2>
+    <form id="edit-stream-form" method="POST" action="/update-stream">
+        <label for="input-customerID">Customer Name: </label>
+        <select name="input-customerID" id="input-customerID">
+            {{#each customers}}
+            <option value="{{this.customer_ID}}">{{this.first_and_last_name}}</option>
+            {{/each}}
+        </select>
+        <label for="input-gameID">Game Title: </label>
+        <select name="input-gameID" id="input-gameID">
+            {{#each games}}
+            <option value="{{this.game_ID}}">{{this.Title}}</option>
+            {{/each}}
+        </select>
+        <label for="input-streamDate">Stream Date: </label>
+        <input type="date" id="input-streamDate" name="input-streamDate">
+
+        <button type="submit">Update Stream</button>
+    </form>
+    <form id="delete-stream-form" method="POST" action="/delete-stream">
+        <input type="hidden" id="delete-stream-id" name="stream_id" value="">
+        <button type="submit" id="delete-button">Delete Stream</button>
+    </form>
+</div>
+
+<script>
+    function selectStream(row) {
+        var formSection = document.getElementById('form-section');
+        formSection.style.display = 'block'; 
+
+        document.getElementById('stream_id').value = row.cells[0].innerText;
+        document.getElementById('customer_id').value = row.cells[1].innerText;
+        document.getElementById('game_id').value = row.cells[2].innerText;
+        document.getElementById('stream_date').value = row.cells[3].innerText;
+        document.getElementById('delete-stream-id').value = row.cells[0].innerText;
+    }
+</script>
+    
+</body>
+</html>

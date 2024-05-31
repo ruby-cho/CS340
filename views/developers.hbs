@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Developers</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <a href="/" class="return-button">Return to Home</a>
+    <h1>Developer Management</h1>
+    <h2><u>Click</u> on the customer to Edit/Delete.</h2>
+    <table id="developers-table">
+        <thead>
+            <tr>
+                <th>Dev ID</th>
+                <th>Dev Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data}}
+            <tr onclick="selectDeveloper(this)">
+                <td>{{this.dev_ID}}</td>
+                <td>{{this.dev_name}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+    <!-- /views/index.hbs -->
+    <h2>Add Customer</h2>
+    <p>To add a new developer, please enter their information below and click `Submit`!</p>
+    <form id="add-developer-form" method="POST" action="/add-developer-form">
+        <label for="input-devname">Developer Name: </label>
+        <input type="text" name="input-devname" id="input-devname">
+
+        <input type="submit">
+    </form>
+
+    <div id="form-section" class="form-section">
+    <h2>Edit Developer Details</h2>
+    <form id="edit-developer-form" method="POST" action="/update-developer">
+        <input type="hidden" id="developer_id" name="developer_id" value="">
+
+        <label for="dev_name">Developer Name:</label>
+        <input type="text" id="dev_name" name="dev_name" value="">
+
+        <button type="submit">Update Developer</button>
+    </form>
+    <form id="delete-developer-form" method="POST" action="/delete-developer">
+        <input type="hidden" id="delete-developer-id" name="developer_id" value="">
+        <button type="submit" id="delete-button">Delete Developer</button>
+    </form>
+</div>
+
+<script>
+    function selectDeveloper(row) {
+        var formSection = document.getElementById('form-section');
+        formSection.style.display = 'block'; 
+
+        document.getElementById('developer_id').value = row.cells[0].innerText;
+        document.getElementById('dev_name').value = row.cells[1].innerText;
+        document.getElementById('delete-developer-id').value = row.cells[0].innerText;
+    }
+</script>
+    
+</body>
+</html>

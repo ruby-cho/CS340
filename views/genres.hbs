@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Genres</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <a href="/" class="return-button">Return to Home</a>
+    <h1>Genre Management</h1>
+    <h2><u>Click</u> on the Genre to Edit/Delete.</h2>
+    <table id="genres-table">
+        <thead>
+            <tr>
+                <th>Genre ID</th>
+                <th>Genre Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data}}
+            <tr onclick="selectGenre(this)">
+                <td>{{this.genre_ID}}</td>
+                <td>{{this.genre_name}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+    <!-- /views/index.hbs -->
+    <h2>Add Genre</h2>
+    <p>To add a new Genre, please enter their information below and click `Submit`!</p>
+    <form id="add-genre-form" method="POST" action="/add-genre-form">
+        <label for="input-genrename">Genre Name: </label>
+        <input type="text" name="input-genrename" id="input-genrename">
+
+        <input type="submit">
+    </form>
+
+    <div id="form-section" class="form-section">
+    <h2>Edit Genre Details</h2>
+    <form id="edit-genre-form" method="POST" action="/update-genre">
+        <input type="hidden" id="genre_id" name="genre_id" value="">
+
+        <label for="genre_name">Genre Name:</label>
+        <input type="text" id="genre_name" name="genre_name" value="">
+
+        <button type="submit">Update Genre</button>
+    </form>
+    <form id="delete-genre-form" method="POST" action="/delete-genre">
+        <input type="hidden" id="delete-genre-id" name="genre_id" value="">
+        <button type="submit" id="delete-button">Delete Genre</button>
+    </form>
+</div>
+
+<script>
+    function selectGenre(row) {
+        var formSection = document.getElementById('form-section');
+        formSection.style.display = 'block'; 
+
+        document.getElementById('genre_id').value = row.cells[0].innerText;
+        document.getElementById('genre_name').value = row.cells[1].innerText;
+        document.getElementById('delete-genre-id').value = row.cells[0].innerText;
+    }
+</script>
+    
+</body>
+</html>
