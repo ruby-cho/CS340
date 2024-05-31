@@ -10,7 +10,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
 
-PORT        = 2566;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 2567;                 // Set a port number at the top so it's easy to change in the future
 
 // Database
 var db = require('./database/db-connector')
@@ -68,6 +68,48 @@ app.post('/add-customer-form', function(req, res){
         }
     })
 })
+
+app.post('/update-customer', function (req, res) {
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Create the query and run it on the database
+    let query1 = `UPDATE Customers SET first_name = ?, last_name = ?, email = ? WHERE customer_ID = ?`;
+    let values = [data.firstname, data.lastname, data.email, data.customer_id];
+
+    db.pool.query(query1, values, function (error, rows, fields) {
+        // Check to see if there was an error
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            res.redirect('/updateCustomer');
+        }
+    });
+});
+
+app.post('/delete-customer', function (req, res) {
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+     // Log the received data to verify the request
+     console.log('Received delete request for customer ID:', data.customer_id);
+
+    // Create the query and run it on the database
+    let query1 = `DELETE FROM Customers WHERE customer_ID = ?`;
+    let values = [data.customer_id];
+
+    db.pool.query(query1, values, function (error, rows, fields) {
+        // Check to see if there was an error
+        if (error) {
+            console.log('Error executing query:', error);
+            res.sendStatus(400);
+        } else {
+            console.log('Delete successful, redirecting to /updateCustomer');
+            res.redirect('/updateCustomer');
+        }
+    });
+});
 
 /*
     LISTENER

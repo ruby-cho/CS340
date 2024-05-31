@@ -67,7 +67,7 @@
         </thead>
         <tbody>
             {{#each data}}
-            <tr>
+            <tr onclick="selectCustomer(this)">
                 <td>{{this.customer_ID}}</td>
                 <td>{{this.first_name}}</td>
                 <td>{{this.last_name}}</td>
@@ -93,8 +93,11 @@
     <input type="submit">
     </form>
 
-    <div id="form-section" class="form-section">
-        <h2>Edit Customer Details</h2>
+<div id="form-section" class="form-section">
+    <h2>Edit Customer Details</h2>
+    <form id="edit-customer-form" method="POST" action="/update-customer">
+        <input type="hidden" id="customer-id" name="customer_id" value="">
+
         <label for="firstname">First Name:</label>
         <input type="text" id="firstname" name="firstname" value="">
 
@@ -104,23 +107,25 @@
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" value="">
 
-        <label for="status">Active Status:</label>
-        <input type="text" id="status" name="status" value="">
-
         <button type="submit">Update Customer</button>
-        <button type="submit">Delete Customer</button>
-    </div>
+    </form>
+    <form id="delete-customer-form" method="POST" action="/delete-customer">
+        <input type="hidden" id="delete-customer-id" name="customer_id" value="">
+        <button type="submit" id="delete-button">Delete Customer</button>
+    </form>
+</div>
 
-    <script>
-        function selectCustomer(row) {
-            var formSection = document.getElementById('form-section');
-            formSection.style.display = 'block'; 
+<script>
+    function selectCustomer(row) {
+        var formSection = document.getElementById('form-section');
+        formSection.style.display = 'block'; 
 
-            document.getElementById('firstname').value = row.cells[1].innerText;
-            document.getElementById('lastname').value = row.cells[2].innerText;
-            document.getElementById('email').value = row.cells[3].innerText;
-            document.getElementById('status').value = row.cells[5].innerText;
-        }
-    </script>
+        document.getElementById('customer-id').value = row.cells[0].innerText;
+        document.getElementById('firstname').value = row.cells[1].innerText;
+        document.getElementById('lastname').value = row.cells[2].innerText;
+        document.getElementById('email').value = row.cells[3].innerText;
+        document.getElementById('delete-customer-id').value = row.cells[0].innerText;
+    }
+</script>
 </body>
 </html>
