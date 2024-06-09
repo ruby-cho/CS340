@@ -1,29 +1,35 @@
 // Get the objects we need to modify
-let addGameForm = document.getElementById('add-game-form');
+let addSubscriptionForm = document.getElementById('add-subscription-form');
 
 // Modify the objects we need
-addGameForm.addEventListener("submit", function (e) {
+addSubscriptionForm.addEventListener("submit", function (e) {
     
     // Prevent the form from submitting
     e.preventDefault();
 
     // Get form fields we need to get data from
-    let inputGameName = document.getElementById("input-gamename");
-    let inputDevID = document.getElementById("input-devID");
+    let inputCustomerID = document.getElementById("input-customerID");
+    let inputStartDate = document.getElementById("input-startDate");
+    let inputEndDate = document.getElementById("input-endDate");
+    let inputActiveStatus = document.getElementById("input-activeStatus");
 
     // Get the values from the form fields
-    let gameNameValue = inputGameName.value;
-    let devIDValue = inputDevID.value;
+    let customerIDValue = inputCustomerID.value;
+    let startDateValue = inputStartDate.value;
+    let endDateValue = inputEndDate.value;
+    let activeStatusValue = inputActiveStatus.value;
 
     // Put our data we want to send in a javascript object
     let data = {
-        gameName: gameNameValue,
-        devID: devIDValue
+        customerID: customerIDValue,
+        startDate: startDateValue,
+        endDate: endDateValue,
+        activeStatus: activeStatusValue
     }
     
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/addGame", true);
+    xhttp.open("POST", "/addSubscription", true);
     xhttp.setRequestHeader("Content-type", "application/json");
 
     // Tell our AJAX request how to resolve
@@ -34,8 +40,10 @@ addGameForm.addEventListener("submit", function (e) {
             addRowToTable(xhttp.response);
 
             // Clear the input fields for another transaction
-            inputGameName.value = '';
-            inputDevID.value = '';
+            inputCustomerID.value = '';
+            inputStartDate.value = '';
+            inputEndDate.value = '';
+            inputActiveStatus.value = '';
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the input.")
@@ -53,7 +61,7 @@ addGameForm.addEventListener("submit", function (e) {
 addRowToTable = (data) => {
 
     // Get a reference to the current table on the page and clear it out.
-    let currentTable = document.getElementById("games-table");
+    let currentTable = document.getElementById("subscriptions-table");
 
     // Get the location where we should insert the new row (end of table)
     let newRowIndex = currentTable.rows.length;
@@ -65,18 +73,24 @@ addRowToTable = (data) => {
     // Create a row and 4 cells
     let row = document.createElement("TR");
     let idCell = document.createElement("TD");
-    let gameNameCell = document.createElement("TD");
-    let devIDCell = document.createElement("TD");
+    let customerIDCell = document.createElement("TD");
+    let startDateCell = document.createElement("TD");
+    let endDateCell = document.createElement("TD");
+    let activeStatusCell = document.createElement("TD");
 
     // Fill the cells with correct data
     idCell.innerText = newRow.id;
-    gameNameCell.innerText = newRow.gameName;
-    devIDCell.innerText = newRow.devID;
+    customerIDCell.innerText = newRow.customerID;
+    startDateCell.innerText = newRow.startDate;
+    endDateCell.innerText = newRow.endDate;
+    activeStatusCell.innerText = newRow.activeStatus;
 
     // Add the cells to the row 
     row.appendChild(idCell);
-    row.appendChild(gameNameCell);
-    row.appendChild(devIDCell);
+    row.appendChild(customerIDCell);
+    row.appendChild(startDateCell);
+    row.appendChild(endDateCell);
+    row.appendChild(activeStatusCell);
     
     // Add the row to the table
     currentTable.appendChild(row);

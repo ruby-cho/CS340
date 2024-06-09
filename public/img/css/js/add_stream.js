@@ -75,9 +75,9 @@ addRowToTable = (data) => {
 
     // Fill the cells with correct data
     idCell.innerText = newRow.id;
-    customerIDCell.innerText = newRow.fname;
-    gameIDCell.innerText = newRow.fname;
-    streamDateCell.innerText = newRow.fname;
+    customerIDCell.innerText = newRow.customerID;
+    gameIDCell.innerText = newRow.gameID;
+    streamDateCell.innerText = newRow.streamDate;
 
     // Add the cells to the row 
     row.appendChild(idCell);

@@ -431,7 +431,7 @@ app.post('/update-stream', function (req, res) {
     });
 });
 
-app.post('/delete-game', function (req, res) {
+app.post('/delete-stream', function (req, res) {
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
 
@@ -453,6 +453,33 @@ app.post('/delete-game', function (req, res) {
         }
     });
 });
+
+// add, update, delete subscription
+
+app.post('/add-subscription-form', function(req, res){
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Subscriptions (customer_ID, start_date, end_date, active_status) VALUES ('${data['input-customerID']}', '${data['input-startDate']}', '${data['input-endDate']}', '${data['input-activeStatus']}')`;
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+
+        // If there was no error, we redirect back to our root route, which automatically runs the SELECT * FROM bsg_people and
+        // presents it on the screen
+        else
+        {
+            res.redirect('/subscriptions');
+        }
+    })
+})
 
 
 

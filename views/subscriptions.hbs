@@ -58,15 +58,25 @@
     <div id="form-section" class="form-section">
     <h2>Edit Subscription Details</h2>
     <form id="edit-subscription-form" method="POST" action="/update-subscription">
-        <input type="hidden" id="developer_id" name="developer_id" value="">
+        <label for="input-customerID">Customer Name: </label>
+        <select name="input-customerID" id="input-customerID">
+            {{#each customers}}
+            <option value="{{this.customer_ID}}">{{this.first_and_last_name}}</option>
+            {{/each}}
 
-        <label for="dev_name">Developer Name:</label>
-        <input type="text" id="dev_name" name="dev_name" value="">
+        <label for="input-startDate">Start Date: </label>
+        <input type="date" id="input-startDate" name="input-startDate">
 
-        <button type="submit">Update Developer</button>
+        <label for="input-endDate">End Date: </label>
+        <input type="date" id="input-endDate" name="input-endDate">
+
+        <label for="input-activeStatus">Active Status: </label>
+        <input type="text" name="input-activeStatus" id="input-activeStatus">
+
+        <input type="submit">
     </form>
-    <form id="delete-developer-form" method="POST" action="/delete-developer">
-        <input type="hidden" id="delete-developer-id" name="developer_id" value="">
+    <form id="delete-subscription-form" method="POST" action="/delete-subscription">
+        <input type="hidden" id="delete-subscription-id" name="subscription_id" value="">
         <button type="submit" id="delete-button">Delete Developer</button>
     </form>
 </div>
@@ -76,9 +86,12 @@
         var formSection = document.getElementById('form-section');
         formSection.style.display = 'block'; 
 
-        document.getElementById('developer_id').value = row.cells[0].innerText;
-        document.getElementById('dev_name').value = row.cells[1].innerText;
-        document.getElementById('delete-developer-id').value = row.cells[0].innerText;
+        document.getElementById('subscription_id').value = row.cells[0].innerText;
+        document.getElementById('customer_id').value = row.cells[1].innerText;
+        document.getElementById('start_date').value = row.cells[2].innerText;
+        document.getElementById('end_date').value = row.cells[3].innerText;
+        document.getElementById('active_status').value = row.cells[4].innerText;
+        document.getElementById('delete-subscription_id').value = row.cells[0].innerText;
     }
 </script>
     
