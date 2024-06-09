@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Genres</title>
     <link rel="stylesheet" href="/styles.css">
+    <style>
+        .form-section {
+            display: none;
+        }
+        .return-button {
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
     <a href="/" class="return-button">Return to Home</a>
@@ -27,42 +36,37 @@
         </tbody>
     </table>
 
-    <!-- /views/index.hbs -->
     <h2>Add Genre</h2>
-    <p>To add a new Genre, please enter their information below and click `Submit`!</p>
+    <p>To add a new Genre, please enter the information below and click `Submit`!</p>
     <form id="add-genre-form" method="POST" action="/add-genre-form">
         <label for="input-genrename">Genre Name: </label>
-        <input type="text" name="input-genrename" id="input-genrename">
-
-        <input type="submit">
+        <input type="text" name="input-genrename" id="input-genrename" required>
+        <input type="submit" value="Submit">
     </form>
 
     <div id="form-section" class="form-section">
-    <h2>Edit Genre Details</h2>
-    <form id="edit-genre-form" method="POST" action="/update-genre">
-        <input type="hidden" id="genre_id" name="genre_id" value="">
+        <h2>Edit Genre Details</h2>
+        <form id="edit-genre-form" method="POST" action="/update-genre">
+            <input type="hidden" id="genre_id" name="genre_id" value="">
+            <label for="genre_name">Genre Name:</label>
+            <input type="text" id="genre_name" name="genre_name" value="" required>
+            <button type="submit">Update Genre</button>
+        </form>
+        <form id="delete-genre-form" method="POST" action="/delete-genre">
+            <input type="hidden" id="delete-genre-id" name="genre_id" value="">
+            <button type="submit" id="delete-button">Delete Genre</button>
+        </form>
+    </div>
 
-        <label for="genre_name">Genre Name:</label>
-        <input type="text" id="genre_name" name="genre_name" value="">
+    <script>
+        function selectGenre(row) {
+            var formSection = document.getElementById('form-section');
+            formSection.style.display = 'block'; 
 
-        <button type="submit">Update Genre</button>
-    </form>
-    <form id="delete-genre-form" method="POST" action="/delete-genre">
-        <input type="hidden" id="delete-genre-id" name="genre_id" value="">
-        <button type="submit" id="delete-button">Delete Genre</button>
-    </form>
-</div>
-
-<script>
-    function selectGenre(row) {
-        var formSection = document.getElementById('form-section');
-        formSection.style.display = 'block'; 
-
-        document.getElementById('genre_id').value = row.cells[0].innerText;
-        document.getElementById('genre_name').value = row.cells[1].innerText;
-        document.getElementById('delete-genre-id').value = row.cells[0].innerText;
-    }
-</script>
-    
+            document.getElementById('genre_id').value = row.cells[0].innerText;
+            document.getElementById('genre_name').value = row.cells[1].innerText;
+            document.getElementById('delete-genre-id').value = row.cells[0].innerText;
+        }
+    </script>
 </body>
 </html>
