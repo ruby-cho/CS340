@@ -52,22 +52,47 @@ app.get('/genres', (req,res) => {
     })
 });
 
-app.get('/games', (req,res) => {
-    let query1 = "SELECT Games.* FROM Games INNER JOIN (SELECT dev_ID FROM Developers) AS Developer ON Games.dev_ID = Developer.dev_ID;"
+app.get('/games', (req, res) => {
+    let query1 = `
+        SELECT Games.*, Developers.dev_name 
+        FROM Games 
+        INNER JOIN Developers ON Games.dev_ID = Developers.dev_ID;
+    `;
 
-    let query2 = "SELECT dev_ID, dev_name FROM Developers;"
+    let query2 = "SELECT dev_ID, dev_name FROM Developers;";
+    let query3 = "SELECT genre_ID, genre_name FROM Genres;";
 
-    db.pool.query(query1, function(error, rows, fields){    // Execute the query
-        let games = rows;
+    db.pool.query(query1, function(error, gameRows, fields) {
+        if (error) {
+            console.log("Error fetching games: ", error);
+            res.sendStatus(500);
+            return;
+        }
+        
+        db.pool.query(query2, function(error, developerRows, fields) {
+            if (error) {
+                console.log("Error fetching developers: ", error);
+                res.sendStatus(500);
+                return;
+            }
 
-        db.pool.query(query2, function(error, rows, fields){
-            let developers = rows;
+            db.pool.query(query3, function(error, genreRows, fields) {
+                if (error) {
+                    console.log("Error fetching genres: ", error);
+                    res.sendStatus(500);
+                    return;
+                }
 
-            res.render('games', {data: games, developers: developers});
-        })
-
-    })
+                res.render('games', {
+                    data: gameRows,
+                    developers: developerRows,
+                    genres: genreRows
+                });
+            });
+        });
+    });
 });
+
 
 app.get('/streams', (req,res) => {
     let query1 = "SELECT Streams.* FROM Streams INNER JOIN (SELECT customer_ID FROM Customers) AS Customer ON Customer.customer_ID = Streams.customer_ID INNER JOIN (SELECT game_ID FROM Games) AS Game ON Game.game_ID = Streams.game_ID;"
