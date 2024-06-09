@@ -92,7 +92,22 @@ app.get('/streams', (req,res) => {
     })
 });
 
+app.get('/subscriptions', (req,res) => {
+    let query1 = "SELECT Subscriptions.* FROM Subscriptions INNER JOIN (SELECT customer_ID FROM Customers) AS Customer ON Customer.customer_ID = Subscriptions.customer_ID;"
+    
+    let query2 = "SELECT customer_ID, CONCAT(first_name, ' ', last_name) AS first_and_last_name FROM Customers;"
 
+    db.pool.query(query1, function(error, rows, fields){    // Execute the query
+        let subscriptions = rows;
+
+        db.pool.query(query2, function(error, rows, fields){
+            let customers = rows;
+            
+            res.render('subscriptions', {data: subscriptions, customers: customers});
+        })
+
+    })
+});
 
 // add, update, delete customer
 
