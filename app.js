@@ -56,7 +56,8 @@ app.get('/games', (req, res) => {
     let query1 = `
         SELECT Games.*, Developers.dev_name 
         FROM Games 
-        INNER JOIN Developers ON Games.dev_ID = Developers.dev_ID;
+        INNER JOIN Developers ON Games.dev_ID = Developers.dev_ID
+        ORDER BY Games.game_ID asc;
     `;
 
     let query2 = "SELECT dev_ID, dev_name FROM Developers;";
@@ -374,7 +375,7 @@ app.post('/update-game', function (req, res) {
 
     // Create the query and run it on the database
     let query1 = `UPDATE Games SET Title = ?, dev_ID = ? WHERE game_ID = ?`;
-    let values = [data.game_name, data['input-devID'], data.game_id];
+    let values = [data.Title, data.dev_ID, data.game_ID];
 
     db.pool.query(query1, values, function (error, rows, fields) {
         // Check to see if there was an error
@@ -392,11 +393,11 @@ app.post('/delete-game', function (req, res) {
     let data = req.body;
 
      // Log the received data to verify the request
-     console.log('Received delete request for game ID:', data.game_ID);
+     console.log('Received delete request for game ID:', data.delete_game_id);
 
     // Create the query and run it on the database
     let query1 = `DELETE FROM Games WHERE game_ID = ?`;
-    let values = [data.game_ID];
+    let values = [data.delete_game_id];
 
     db.pool.query(query1, values, function (error, rows, fields) {
         // Check to see if there was an error

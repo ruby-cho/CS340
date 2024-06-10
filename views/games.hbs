@@ -50,13 +50,13 @@
     <div id="form-section" class="form-section">
     <h2>Edit Game Details</h2>
     <form id="edit-game-form" method="POST" action="/update-game">
-        <input type="hidden" id="game_id" name="game_id" value="">
+        <input type="hidden" id="game_ID" name="game_ID" value="">
 
-        <label for="game_name">Game Name:</label>
-        <input type="text" id="game_name" name="game_name" value="">
+        <label for="Title">Game Name:</label>
+        <input type="text" id="Title" name="Title" value="">
 
         <label for="input-devID">Developer Name: </label>
-        <select name="input-devID" id="input-devID">
+        <select name="dev_ID" id="dev_ID">
             {{#each developers}}
             <option value="{{this.dev_ID}}">{{this.dev_name}}</option>
             {{/each}}
@@ -66,7 +66,7 @@
     </form>
 
     <form id="delete-game-form" method="POST" action="/delete-game">
-        <input type="hidden" id="delete-game-id" name="game_ID" value="">
+        <input type="hidden" id="delete_game_id" name="delete_game_id" value="">
         <button type="submit" id="delete-button">Delete Game</button>
     </form>
 </div>
@@ -76,10 +76,10 @@
         var formSection = document.getElementById('form-section');
         formSection.style.display = 'block'; 
 
-        document.getElementById('game_id').value = row.cells[0].innerText;
-        document.getElementById('game_name').value = row.cells[1].innerText;
+        document.getElementById('game_ID').value = row.cells[0].innerText;
+        document.getElementById('Title').value = row.cells[1].innerText;
         document.getElementById('dev_ID').value = row.cells[2].innerText;
-        document.getElementById('delete-game-id').value = row.cells[0].innerText;
+        document.getElementById('delete_game_id').value = row.cells[0].innerText;
     }
 </script>
     
