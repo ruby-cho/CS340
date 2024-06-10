@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Games</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <a href="/" class="return-button">Return to Home</a>
+    <h1>Game Management</h1>
+    <h2><u>Click</u> on the Game and Genre Pairing to Edit/Delete.</h2>
+    <table id="games-genres-table">
+        <thead>
+            <tr>
+                <th>Game_Genre ID</th>
+                <th>Game ID</th>
+                <th>Genre ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data}}
+            <tr onclick="selectGameGenre(this)">
+                <td>{{this.game_genre_ID}}</td>
+                <td>{{this.game_ID}}</td>
+                <td>{{this.genre_ID}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+    <!-- /views/index.hbs -->
+    <h2>Add Game and Genre Pairing</h2>
+    <p>To add a new Game and Genre pairing, please enter below and click `Submit`!</p>
+    <form id="add-game-genre-form" method="POST" action="/add-game-genre-form">
+        <label for="input-gameID">Game Title: </label>
+        <select name="input-gameID" id="input-gameID">
+            <option value="">Select a Game</option>
+            {{#each games}}
+            <option value="{{this.game_ID}}">{{this.Title}}</option>
+            {{/each}}
+        </select>
+
+        <label for="input-genreID">Genre: </label>
+        <select name="input-genreID" id="input-genreID">
+            <option value="">Select a Genre</option>
+            {{#each genres}}
+            <option value="{{this.genre_ID}}">{{this.genre_name}}</option>
+            {{/each}}
+        </select>
+
+        <button type="submit">Add Pairing</button>
+    </form>
+
+    <div id="form-section" class="form-section">
+    <h2>Edit Game Genre Details</h2>
+    <form id="edit-game-genre-form" method="POST" action="/update-game-genre">
+        <input type="hidden" id="game_genre_ID" name="game_genre_ID" value="">
+
+        <label for="game_ID">Game Name:</label>
+        <select name="game_ID" id="game_ID">
+            <option value="">Select a Game</option>
+            {{#each games}}
+            <option value="{{this.game_ID}}">{{this.Title}}</option>
+            {{/each}}
+        </select>
+
+        <label for="genre_ID">Genre: </label>
+        <select name="genre_ID" id="genre_ID">
+            <option value="">Select a Genre</option>
+            {{#each genres}}
+            <option value="{{this.genre_ID}}">{{this.genre_name}}</option>
+            {{/each}}
+        </select>
+
+        <button type="submit">Update Pairing</button>
+    </form>
+
+    <form id="delete-game-genre-form" method="POST" action="/delete-game-genre">
+        <input type="hidden" id="delete_game_genre_id" name="delete_game_genre_id" value="">
+        <button type="submit" id="delete-button">Delete Pairing</button>
+    </form>
+</div>
+
+<script>
+    function selectGameGenre(row) {
+        var formSection = document.getElementById('form-section');
+        formSection.style.display = 'block'; 
+
+        document.getElementById('game_genre_ID').value = row.cells[0].innerText;
+        document.getElementById('game_ID').value = row.cells[1].innerText;
+        document.getElementById('genre_ID').value = row.cells[2].innerText;
+        document.getElementById('delete_game_genre_id').value = row.cells[0].innerText;
+    }
+</script>
+    
+</body>
+</html>

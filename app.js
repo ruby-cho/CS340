@@ -135,6 +135,27 @@ app.get('/subscriptions', (req,res) => {
     })
 });
 
+app.get('/games_genres', (req,res) => {
+    let query1 = "SELECT Games_Genres.* FROM Games_Genres;"
+
+    let query2 = "SELECT Games.* FROM Games;"
+
+    let query3 = "SELECT Genres.* FROM Genres;"
+    db.pool.query(query1, function(error, rows, fields){    // Execute the query
+        let games_genres = rows;
+
+        db.pool.query(query2, function(error, rows, fields){
+            let games = rows;
+
+            db.pool.query(query3, function(error, rows, fields){
+                let genres = rows;
+
+                res.render('games_genres', {data: games_genres, games: games, genres:genres});                  // Render the Customers.hbs file, and also send the renderer
+            })
+        })
+    })
+});
+
 // add, update, delete customer
 
 app.post('/add-customer-form', function(req, res){
@@ -338,6 +359,75 @@ app.post('/delete-genre', function (req, res) {
         } else {
             console.log('Delete successful, redirecting to /genres');
             res.redirect('/genres');
+        }
+    });
+});
+
+// add, delete, update games_genres
+
+app.post('/add-game-genre-form', function(req, res){
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Games_Genres (game_ID, genre_ID) VALUES ('${data['input-gameID']}', '${data['input-genreID']}')`;
+    db.pool.query(query1, function(error, rows, fields){
+
+        // Check to see if there was an error
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        }
+
+        // If there was no error, we redirect back to our root route, which automatically runs the SELECT * FROM bsg_people and
+        // presents it on the screen
+        else
+        {
+            res.redirect('/games_genres');
+        }
+    })
+})
+
+app.post('/update-game-genre', function (req, res) {
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Create the query and run it on the database
+    let query1 = `UPDATE Games_Genres SET game_ID = ?, genre_ID = ? WHERE game_genre_ID = ?`;
+    let values = [data.game_ID, data.genre_ID, data.game_genre_ID];
+
+    db.pool.query(query1, values, function (error, rows, fields) {
+        // Check to see if there was an error
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            res.redirect('/games_genres');
+        }
+    });
+});
+
+app.post('/delete-game-genre', function (req, res) {
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+     // Log the received data to verify the request
+     console.log('Received delete request for genre ID:', data.delete_game_genre_id);
+
+    // Create the query and run it on the database
+    let query1 = `DELETE FROM Games_Genres WHERE game_genre_ID = ?`;
+    let values = [data.delete_game_genre_id];
+
+    db.pool.query(query1, values, function (error, rows, fields) {
+        // Check to see if there was an error
+        if (error) {
+            console.log('Error executing query:', error);
+            res.sendStatus(400);
+        } else {
+            console.log('Delete successful, redirecting to /games_genres');
+            res.redirect('/games_genres');
         }
     });
 });
