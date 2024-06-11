@@ -1,3 +1,8 @@
+//Citation for the following function:
+//Date: 05/22/2024
+//Adapted from and based on CS340 Starter Code
+//Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app
+
 // Get the objects we need to modify
 let addSubscriptionForm = document.getElementById('add-subscription-form');
 

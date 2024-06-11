@@ -1,4 +1,7 @@
-
+//Citation for the following function:
+//Date: 05/18/2024
+//Adapted from and based on CS340 Starter Code
+//Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app
 
 /*
     SETUP
@@ -537,49 +540,7 @@ app.post('/add-stream-form', function(req, res){
     })
 })
 
-app.post('/update-stream', function (req, res) {
-    // Capture the incoming data and parse it back to a JS object
-    let data = req.body;
-
-    // Create the query and run it on the database
-    let query1 = `UPDATE Streams SET customer_ID = ?, game_ID = ?, stream_date = ? WHERE stream_ID = ?`;
-    let values = [data.customer_id, data.game_id, data.stream_date, data.stream_id];
-
-    db.pool.query(query1, values, function (error, rows, fields) {
-        // Check to see if there was an error
-        if (error) {
-            console.log(error);
-            res.sendStatus(400);
-        } else {
-            res.redirect('/streams');
-        }
-    });
-});
-
-app.post('/delete-stream', function (req, res) {
-    // Capture the incoming data and parse it back to a JS object
-    let data = req.body;
-
-     // Log the received data to verify the request
-     console.log('Received delete request for game ID:', data.game_ID);
-
-    // Create the query and run it on the database
-    let query1 = `DELETE FROM Games WHERE game_ID = ?`;
-    let values = [data.game_ID];
-
-    db.pool.query(query1, values, function (error, rows, fields) {
-        // Check to see if there was an error
-        if (error) {
-            console.log('Error executing query:', error);
-            res.sendStatus(400);
-        } else {
-            console.log('Delete successful, redirecting to /games');
-            res.redirect('/games');
-        }
-    });
-});
-
-// add, update, delete subscription
+// add subscription
 
 app.post('/add-subscription-form', function(req, res){
     // Capture the incoming data and parse it back to a JS object
