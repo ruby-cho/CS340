@@ -7,9 +7,11 @@
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
+    <!-- Link to return to the home page -->
     <a href="/" class="return-button">Return to Home</a>
     <h1>Subscription Management</h1>
     <h2><u>Click</u> on the subscription to Edit/Delete.</h2>
+    <!-- Table displaying the list of subscriptions -->
     <table id="subscription-table">
         <thead>
             <tr>
@@ -34,6 +36,7 @@
     </table>
 
     <!-- /views/index.hbs -->
+    <!-- Section for adding a new subscription -->
     <h2>Add Subscription</h2>
     <p>To add a new subscription, please enter the information below and click `Submit`!</p>
     <form id="add-subscription-form" method="POST" action="/add-subscription-form">
@@ -55,8 +58,10 @@
         <input type="submit">
     </form>
 
+    <!-- Section for editing and deleting subscription details -->
     <div id="form-section" class="form-section">
     <h2>Edit Subscription Details</h2>
+    <!-- Form to edit subscription details -->
     <form id="edit-subscription-form" method="POST" action="/update-subscription">
         <label for="input-customerID">Customer Name: </label>
         <select name="input-customerID" id="input-customerID">

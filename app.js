@@ -3,7 +3,8 @@
 /*
     SETUP
 */
-// Express
+
+// Express - Importing the necessary libraries
 var express = require('express');   // We are using the express library for the web server
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
 app.use(express.json())
@@ -27,10 +28,12 @@ app.set('view engine', '.hbs');                 // Tell express to use the handl
     ROUTES
 */
 
+// Renders the Home Page
 app.get('/', (req,res) => {
     res.render('index');
 });
 
+// Render the customer update page
 app.get('/updateCustomer', (req,res) => {
         let query1 = "SELECT Customers.* FROM Customers;"
         db.pool.query(query1, function(error, rows, fields){    // Execute the query
@@ -38,6 +41,7 @@ app.get('/updateCustomer', (req,res) => {
         })
 });
 
+// render the developer management page
 app.get('/developers', (req,res) => {
     let query1 = "SELECT Developers.* FROM Developers;"
     db.pool.query(query1, function(error, rows, fields){    // Execute the query
@@ -45,6 +49,7 @@ app.get('/developers', (req,res) => {
     })
 });
 
+// render the genres page
 app.get('/genres', (req,res) => {
     let query1 = "SELECT Genres.* FROM Genres;"
     db.pool.query(query1, function(error, rows, fields){    // Execute the query
@@ -52,6 +57,7 @@ app.get('/genres', (req,res) => {
     })
 });
 
+// render the games page with related developers and genres
 app.get('/games', (req, res) => {
     let query1 = `
         SELECT Games.*, Developers.dev_name 
@@ -63,21 +69,21 @@ app.get('/games', (req, res) => {
     let query2 = "SELECT dev_ID, dev_name FROM Developers;";
     let query3 = "SELECT genre_ID, genre_name FROM Genres;";
 
-    db.pool.query(query1, function(error, gameRows, fields) {
+    db.pool.query(query1, function(error, gameRows, fields) { //execute the query
         if (error) {
             console.log("Error fetching games: ", error);
             res.sendStatus(500);
             return;
         }
         
-        db.pool.query(query2, function(error, developerRows, fields) {
+        db.pool.query(query2, function(error, developerRows, fields) { // fetch developers
             if (error) {
                 console.log("Error fetching developers: ", error);
                 res.sendStatus(500);
                 return;
             }
 
-            db.pool.query(query3, function(error, genreRows, fields) {
+            db.pool.query(query3, function(error, genreRows, fields) { // fetch genres
                 if (error) {
                     console.log("Error fetching genres: ", error);
                     res.sendStatus(500);
@@ -95,6 +101,7 @@ app.get('/games', (req, res) => {
 });
 
 
+// render the streams page with related customers and games
 app.get('/streams', (req,res) => {
     let query1 = "SELECT Streams.* FROM Streams INNER JOIN (SELECT customer_ID FROM Customers) AS Customer ON Customer.customer_ID = Streams.customer_ID INNER JOIN (SELECT game_ID FROM Games) AS Game ON Game.game_ID = Streams.game_ID;"
 
@@ -105,10 +112,10 @@ app.get('/streams', (req,res) => {
     db.pool.query(query1, function(error, rows, fields){    // Execute the query
         let streams = rows;
 
-        db.pool.query(query2, function(error, rows, fields){
+        db.pool.query(query2, function(error, rows, fields){ // fetch customers
             let customers = rows;
 
-            db.pool.query(query3, function(error, rows, fields){
+            db.pool.query(query3, function(error, rows, fields){ // fetch games
                 let games = rows; 
                 
                 res.render('streams', {data: streams, customers: customers, games:games});
@@ -118,6 +125,7 @@ app.get('/streams', (req,res) => {
     })
 });
 
+//render the subscriptions page with related customers
 app.get('/subscriptions', (req,res) => {
     let query1 = "SELECT Subscriptions.* FROM Subscriptions INNER JOIN (SELECT customer_ID FROM Customers) AS Customer ON Customer.customer_ID = Subscriptions.customer_ID;"
     
@@ -126,7 +134,7 @@ app.get('/subscriptions', (req,res) => {
     db.pool.query(query1, function(error, rows, fields){    // Execute the query
         let subscriptions = rows;
 
-        db.pool.query(query2, function(error, rows, fields){
+        db.pool.query(query2, function(error, rows, fields){ // fetch customers
             let customers = rows;
             
             res.render('subscriptions', {data: subscriptions, customers: customers});
@@ -135,6 +143,7 @@ app.get('/subscriptions', (req,res) => {
     })
 });
 
+//render the games_genres page with related games and genres
 app.get('/games_genres', (req,res) => {
     let query1 = "SELECT Games_Genres.* FROM Games_Genres;"
 
@@ -144,13 +153,13 @@ app.get('/games_genres', (req,res) => {
     db.pool.query(query1, function(error, rows, fields){    // Execute the query
         let games_genres = rows;
 
-        db.pool.query(query2, function(error, rows, fields){
+        db.pool.query(query2, function(error, rows, fields){ // fetch games
             let games = rows;
 
-            db.pool.query(query3, function(error, rows, fields){
+            db.pool.query(query3, function(error, rows, fields){ // fetch genres
                 let genres = rows;
 
-                res.render('games_genres', {data: games_genres, games: games, genres:genres});                  // Render the Customers.hbs file, and also send the renderer
+                res.render('games_genres', {data: games_genres, games: games, genres:genres});   // Render the Customers.hbs file, and also send the renderer
             })
         })
     })

@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Streams</title>
+    <!-- Link to external stylesheet for styling the page -->
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
+    <!-- Link to return to the home page -->
     <a href="/" class="return-button">Return to Home</a>
     <h1>Stream Management</h1>
     <h2><u>Click</u> on the Stream to Edit/Delete.</h2>
+    <!-- Table displaying the list of streams -->
     <table id="streams-table">
         <thead>
             <tr>
@@ -32,6 +35,7 @@
     </table>
 
     <!-- /views/index.hbs -->
+    <!-- Section for adding a new stream -->
     <h2>Add Stream</h2>
     <p>To add a new Stream, please enter their information below and click `Submit`!</p>
     <form id="add-stream-form" method="POST" action="/add-stream-form">
@@ -55,8 +59,10 @@
         <input type="submit">
     </form>
 
+    <!-- Section for editing and deleting stream details -->
     <div id="form-section" class="form-section">
     <h2>Edit Stream Details</h2>
+    <!-- Form to edit stream details -->
     <form id="edit-stream-form" method="POST" action="/update-stream">
         <label for="input-customerID">Customer Name: </label>
         <select name="input-customerID" id="input-customerID">
@@ -75,17 +81,20 @@
 
         <button type="submit">Update Stream</button>
     </form>
+    <!-- Form to delete stream -->
     <form id="delete-stream-form" method="POST" action="/delete-stream">
         <input type="hidden" id="delete-stream-id" name="stream_id" value="">
         <button type="submit" id="delete-button">Delete Stream</button>
     </form>
 </div>
 
+<!-- JavaScript function to handle row selection and populate the edit/delete forms -->
 <script>
     function selectStream(row) {
         var formSection = document.getElementById('form-section');
         formSection.style.display = 'block'; 
 
+         // Populate the hidden and visible form fields with the selected stream's details
         document.getElementById('stream_id').value = row.cells[0].innerText;
         document.getElementById('customer_id').value = row.cells[1].innerText;
         document.getElementById('game_id').value = row.cells[2].innerText;

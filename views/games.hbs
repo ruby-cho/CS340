@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Games</title>
+    <!-- Link to external stylesheet for styling the page -->
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
+    <!-- Link to return to the home page -->
     <a href="/" class="return-button">Return to Home</a>
     <h1>Game Management</h1>
     <h2><u>Click</u> on the Game to Edit/Delete.</h2>
+    <!-- Table displaying the list of games -->
     <table id="games-table">
         <thead>
             <tr>
@@ -30,6 +33,7 @@
     </table>
 
     <!-- /views/index.hbs -->
+    <!-- Section for adding a new game -->
     <h2>Add Game</h2>
     <p>To add a new Game, please enter their information below and click `Submit`!</p>
     <form id="add-game-form" method="POST" action="/add-game-form">
@@ -47,8 +51,10 @@
         <button type="submit">Add Game</button>
     </form>
 
+    <!-- Section for editing and deleting game details -->
     <div id="form-section" class="form-section">
     <h2>Edit Game Details</h2>
+    <!-- Form to edit game details -->
     <form id="edit-game-form" method="POST" action="/update-game">
         <input type="hidden" id="game_ID" name="game_ID" value="">
 
@@ -65,17 +71,20 @@
         <button type="submit">Update Game</button>
     </form>
 
+    <!-- Form to delete game -->
     <form id="delete-game-form" method="POST" action="/delete-game">
         <input type="hidden" id="delete_game_id" name="delete_game_id" value="">
         <button type="submit" id="delete-button">Delete Game</button>
     </form>
 </div>
 
+<!-- JavaScript function to handle row selection and populate the edit/delete forms -->
 <script>
     function selectGame(row) {
         var formSection = document.getElementById('form-section');
         formSection.style.display = 'block'; 
 
+        // Populate the hidden and visible form fields with the selected game's details
         document.getElementById('game_ID').value = row.cells[0].innerText;
         document.getElementById('Title').value = row.cells[1].innerText;
         document.getElementById('dev_ID').value = row.cells[2].innerText;

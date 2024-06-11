@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Genres</title>
+    <!-- Link to external stylesheet for styling the page -->
     <link rel="stylesheet" href="/styles.css">
     <style>
+        /* Style to hide the form section by default */
         .form-section {
             display: none;
         }
+        /* Style for the return button */
         .return-button {
             display: inline-block;
             margin-bottom: 20px;
@@ -16,9 +19,11 @@
     </style>
 </head>
 <body>
+    <!-- Link to return to the home page -->
     <a href="/" class="return-button">Return to Home</a>
     <h1>Genre Management</h1>
     <h2><u>Click</u> on the Genre to Edit/Delete.</h2>
+    <!-- Table displaying the list of genres -->
     <table id="genres-table">
         <thead>
             <tr>
@@ -36,6 +41,7 @@
         </tbody>
     </table>
 
+    <!-- Section for adding a new genre -->
     <h2>Add Genre</h2>
     <p>To add a new Genre, please enter the information below and click `Submit`!</p>
     <form id="add-genre-form" method="POST" action="/add-genre-form">
@@ -44,25 +50,30 @@
         <input type="submit" value="Submit">
     </form>
 
+    <!-- Section for editing and deleting genre details -->
     <div id="form-section" class="form-section">
         <h2>Edit Genre Details</h2>
+        <!-- Form to edit genre details -->
         <form id="edit-genre-form" method="POST" action="/update-genre">
             <input type="hidden" id="genre_id" name="genre_id" value="">
             <label for="genre_name">Genre Name:</label>
             <input type="text" id="genre_name" name="genre_name" value="" required>
             <button type="submit">Update Genre</button>
         </form>
+        <!-- Form to delete genre -->
         <form id="delete-genre-form" method="POST" action="/delete-genre">
             <input type="hidden" id="delete-genre-id" name="genre_id" value="">
             <button type="submit" id="delete-button">Delete Genre</button>
         </form>
     </div>
 
+    <!-- JavaScript function to handle row selection and populate the edit/delete forms -->
     <script>
         function selectGenre(row) {
             var formSection = document.getElementById('form-section');
             formSection.style.display = 'block'; 
 
+            // Populate the hidden and visible form fields with the selected genre's details
             document.getElementById('genre_id').value = row.cells[0].innerText;
             document.getElementById('genre_name').value = row.cells[1].innerText;
             document.getElementById('delete-genre-id').value = row.cells[0].innerText;

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Developers</title>
+    <!-- Link to external stylesheet for styling the page -->
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
@@ -28,6 +29,7 @@
     </table>
 
     <!-- /views/index.hbs -->
+    <!-- Section for adding a new developer -->
     <h2>Add Customer</h2>
     <p>To add a new developer, please enter their information below and click `Submit`!</p>
     <form id="add-developer-form" method="POST" action="/add-developer-form">
@@ -37,6 +39,7 @@
         <input type="submit">
     </form>
 
+    <!-- Section for editing and deleting developer details -->
     <div id="form-section" class="form-section">
     <h2>Edit Developer Details</h2>
     <form id="edit-developer-form" method="POST" action="/update-developer">
@@ -53,11 +56,13 @@
     </form>
 </div>
 
+<!-- JavaScript function to handle row selection and populate the edit/delete forms -->
 <script>
     function selectDeveloper(row) {
         var formSection = document.getElementById('form-section');
-        formSection.style.display = 'block'; 
+        formSection.style.display = 'block';
 
+        // Populate the hidden and visible form fields with the selected developer's details
         document.getElementById('developer_id').value = row.cells[0].innerText;
         document.getElementById('dev_name').value = row.cells[1].innerText;
         document.getElementById('delete-developer-id').value = row.cells[0].innerText;
